@@ -23,6 +23,7 @@ composer create-project --prefer-dist laravel/laravel .
 composer require laravel/ui
 chmod 770 -R storage/
 chmod 770 -R bootstrap/cache/
+npm install
 npm install -D vue vuex vue-router
 ```
 

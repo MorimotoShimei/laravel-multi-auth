@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,31 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::namespace('User')->prefix('user')->name('user.')->group(function() {
+    Auth::routes([
+        'register' => true,
+        'reset' => false,
+        'verify' => false,
+    ]);
+
+    // ログイン認証後
+    Route::middleware('auth:user')->group(function () {
+        Route::resource('home', 'HomeController', ['only' => 'index']);
+    });
+});
+
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
+    Auth::routes([
+        'register' => true,
+        'reset' => false,
+        'verify' => false,
+    ]);
+
+    Route::middleware('auth:admin')->group(function () {
+        Route:: resource('home', 'HomeController', ['only' => 'index']);
+    });
+});
 
 Route::get('/', function () {
     return view('welcome');
